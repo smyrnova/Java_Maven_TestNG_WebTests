@@ -34,7 +34,6 @@ public class WebTests {
         //1. Открыть вебсайт на базовой странице
         String url = "http://www.99-bottles-of-beer.net/";
         driver.get(url);
-        System.out.println("Page is opened.");
 
         //2. Считать заголовок в правом верхнем углу
         WebElement h1 = driver.findElement(By.xpath("//div[@id='header']/h1"));
@@ -47,7 +46,6 @@ public class WebTests {
 
         //4. Закрыть браузер
         driver.quit();
-        System.out.println("Page is closed.");
         System.out.println("The end of test");
 
     }
@@ -55,7 +53,7 @@ public class WebTests {
 
     @Test
     public void testCheckLastMenuItem() {
-        System.out.println("'CheckLastMenuItem' test is started.");
+
         /**
          * TC_11_02 Подтвердите, что на странице по базовой ссылке последний пункт меню называется Submit new Language
          * Шаги:
@@ -64,6 +62,7 @@ public class WebTests {
          * 3. Подтвердить, что название последнего пункта меню соответствует ожидаемому
          * 4. Закрыть браузер
          */
+        System.out.println("'CheckLastMenuItem' test is started.");
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
 
@@ -77,14 +76,15 @@ public class WebTests {
         WebElement lastMenuItem = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
         String expectedResult = "SUBMIT NEW LANGUAGE";
         String actualResult = lastMenuItem.getText();
+
         Assert.assertEquals(actualResult, expectedResult);
+
         driver.quit();
         System.out.println("The end of test.");
     }
 
     @Test
     public void testCheckSubmitNewLanguageSubTitle() {
-        System.out.println("'CheckSubmitNewLanguageSubTitle' test is started.");
         /**
          * TC_11_03 Подтвердите, что на странице по базовой ссылке последний пункт меню имеет подзаголовок Submit new Language
          *
@@ -95,6 +95,7 @@ public class WebTests {
          * 4. Подтвердить, что название подзаголовка последнего пункта меню соответствует ожидаемому
          * 5. Закрыть браузер
          */
+        System.out.println("'CheckSubmitNewLanguageSubTitle' test is started.");
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
@@ -120,7 +121,7 @@ public class WebTests {
 
     @Test
     public void testCheckFirstSubmenuOfBrowseLang() {
-        System.out.println("'CheckFirstSubmenuOfBrowseLang' test is started.");
+
         /**
          * TC_11_04 Подтвердите, что на странице по ссылке http://www.99-bottles-of-beer.net/abc.html , первый пункт подменю называется 0-9
          *
@@ -130,6 +131,7 @@ public class WebTests {
          * 3. Подтвердить, что название подменю соответствует ожидаемому
          * 4. Закрыть браузер
          */
+        System.out.println("'CheckFirstSubmenuOfBrowseLang' test is started.");
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
@@ -154,6 +156,7 @@ public class WebTests {
 
     @Test
     public void testCheckNamesSiteOwners() {
+
         /**
          * TC_11_06 Подтвердите, что имена создателей сайта:
          * Oliver Schade
@@ -166,6 +169,7 @@ public class WebTests {
          * 3.Подтвердить, имена создателей.
          * 4.Закрыть браузер
          */
+        System.out.println("'CheckNamesSiteOwners' test is started.");
         String chromeDriver = "webdriver.chrome.driver";
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
