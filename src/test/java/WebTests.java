@@ -5,6 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+import java.util.Set;
+
 
 public class WebTests {
     @Test
@@ -108,8 +111,40 @@ public class WebTests {
         driver.quit();
         System.out.println("The end of test.");
 
-
     }
 
+    @Test
+    public void testCheckFirstSubmenuOfBrowseLang () {
+        System.out.println("'CheckFirstSubmenuOfBrowseLang' test is started.");
+        /**
+         * TC_11_04 Подтвердите, что на странице по ссылке http://www.99-bottles-of-beer.net/abc.html , первый пункт подменю называется 0-9
+         *
+         * Шаги:
+         * 1. Открыть вебсайт на странице
+         * 2. Считать название первого подзаголовка
+         * 3. Подтвердить, что название подменю соответствует ожидаемому
+         * 4. Закрыть браузер
+         */
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+        String url = "http://www.99-bottles-of-beer.net/abc.html";
+
+        driver.get(url);
+
+        WebElement subMenu = driver.findElement(By.xpath("//ul[@id='submenu']/li/a[text()='0-9']"));
+        String expectedresult = "0-9";
+        String actualResult = subMenu.getText();
+
+        Assert.assertEquals(actualResult, expectedresult);
+
+        driver.quit();
+        System.out.println("The end of test.");
+
+
+
+
+    }
 
 }
