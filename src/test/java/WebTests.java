@@ -70,6 +70,8 @@ public class WebTests {
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
+        driver.manage().window().maximize();
+
         String url = "http://www.99-bottles-of-beer.net/";
         driver.get(url);
         WebElement lastMenuItem = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
@@ -97,6 +99,9 @@ public class WebTests {
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
         String url = "http://www.99-bottles-of-beer.net/";
 
         driver.get(url);
@@ -129,6 +134,9 @@ public class WebTests {
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
         String url = "http://www.99-bottles-of-beer.net/abc.html";
 
         driver.get(url);
@@ -162,6 +170,9 @@ public class WebTests {
         String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
         String url = "http://www.99-bottles-of-beer.net/";
 
         driver.get(url);
