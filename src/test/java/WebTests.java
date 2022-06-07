@@ -114,7 +114,7 @@ public class WebTests {
     }
 
     @Test
-    public void testCheckFirstSubmenuOfBrowseLang () {
+    public void testCheckFirstSubmenuOfBrowseLang() {
         System.out.println("'CheckFirstSubmenuOfBrowseLang' test is started.");
         /**
          * TC_11_04 Подтвердите, что на странице по ссылке http://www.99-bottles-of-beer.net/abc.html , первый пункт подменю называется 0-9
@@ -141,9 +141,52 @@ public class WebTests {
 
         driver.quit();
         System.out.println("The end of test.");
+    }
 
 
+    @Test
+    public void testCheckNamesSiteOwners() {
+        /**
+         * TC_11_06 Подтвердите, что имена создателей сайта:
+         * Oliver Schade
+         * Gregor Scheithauer
+         * Stefan Scheler
+         *
+         * Шаги:
+         * 1.Открыть сайт на главной
+         * 2.Перейти в субменю Team
+         * 3.Подтвердить, имена создателей.
+         * 4.Закрыть браузер
+         */
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+        String url = "http://www.99-bottles-of-beer.net/";
 
+        driver.get(url);
+
+        WebElement teamSubmenu = driver.findElement(By.xpath("//ul[@id='submenu']/li/a[text()='Team']"));
+        teamSubmenu.click();
+
+        WebElement oliver = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Oliver Schade']"));
+        WebElement gregor = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Gregor Scheithauer']"));
+        WebElement stefan = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Stefan Scheler']"));
+
+        String expectedresult = "Oliver Schade";
+        String actualResult = oliver.getText();
+        Assert.assertEquals(actualResult, expectedresult);
+
+        expectedresult = "Gregor Scheithauer";
+        actualResult = gregor.getText();
+        Assert.assertEquals(actualResult, expectedresult);
+
+        expectedresult = "Stefan Scheler";
+        actualResult = stefan.getText();
+        Assert.assertEquals(actualResult, expectedresult);
+
+        driver.quit();
+        System.out.println("The end of test.");
 
     }
 
