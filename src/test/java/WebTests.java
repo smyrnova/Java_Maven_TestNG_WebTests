@@ -5,9 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.List;
-import java.util.Set;
-
+import java.util.Locale;
 
 public class WebTests {
     @Test
@@ -23,7 +21,7 @@ public class WebTests {
         System.out.println("'Check H1' test is started.");
         //Create driver
         String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
@@ -62,9 +60,8 @@ public class WebTests {
          * 3. Подтвердить, что название последнего пункта меню соответствует ожидаемому
          * 4. Закрыть браузер
          */
-        System.out.println("'CheckLastMenuItem' test is started.");
         String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
 
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
@@ -73,14 +70,14 @@ public class WebTests {
 
         String url = "http://www.99-bottles-of-beer.net/";
         driver.get(url);
-        WebElement lastMenuItem = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
-        String expectedResult = "SUBMIT NEW LANGUAGE";
+        //the LAST li element
+        WebElement lastMenuItem = driver.findElement(By.xpath("//ul[@id='menu']/li[last()]"));
+        String expectedResult = "Submit new Language";
         String actualResult = lastMenuItem.getText();
 
-        Assert.assertEquals(actualResult, expectedResult);
+        Assert.assertEquals(actualResult, expectedResult.toUpperCase());
 
         driver.quit();
-        System.out.println("The end of test.");
     }
 
     @Test
@@ -95,9 +92,9 @@ public class WebTests {
          * 4. Подтвердить, что название подзаголовка последнего пункта меню соответствует ожидаемому
          * 5. Закрыть браузер
          */
-        System.out.println("'CheckSubmitNewLanguageSubTitle' test is started.");
+
         String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
@@ -115,7 +112,6 @@ public class WebTests {
 
         Assert.assertEquals(actualResult, expectedResult);
         driver.quit();
-        System.out.println("The end of test.");
 
     }
 
@@ -131,9 +127,9 @@ public class WebTests {
          * 3. Подтвердить, что название подменю соответствует ожидаемому
          * 4. Закрыть браузер
          */
-        System.out.println("'CheckFirstSubmenuOfBrowseLang' test is started.");
+
         String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
@@ -150,7 +146,6 @@ public class WebTests {
         Assert.assertEquals(actualResult, expectedresult);
 
         driver.quit();
-        System.out.println("The end of test.");
     }
 
 
@@ -169,9 +164,9 @@ public class WebTests {
          * 3.Подтвердить, имена создателей.
          * 4.Закрыть браузер
          */
-        System.out.println("'CheckNamesSiteOwners' test is started.");
+
         String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v102/chromedriver.exe";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
         System.setProperty(chromeDriver, driverPath);
         WebDriver driver = new ChromeDriver();
 
@@ -188,20 +183,105 @@ public class WebTests {
         WebElement gregor = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Gregor Scheithauer']"));
         WebElement stefan = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Stefan Scheler']"));
 
-        String expectedresult = "Oliver Schade";
-        String actualResult = oliver.getText();
-        Assert.assertEquals(actualResult, expectedresult);
+        String expectedresult1 = "Oliver Schade";
+        String actualResult1 = oliver.getText();
+        Assert.assertEquals(actualResult1, expectedresult1);
 
-        expectedresult = "Gregor Scheithauer";
-        actualResult = gregor.getText();
-        Assert.assertEquals(actualResult, expectedresult);
+        String expectedresult2 = "Gregor Scheithauer";
+        String actualResult2 = gregor.getText();
+        Assert.assertEquals(actualResult2, expectedresult2);
 
-        expectedresult = "Stefan Scheler";
-        actualResult = stefan.getText();
-        Assert.assertEquals(actualResult, expectedresult);
+        String expectedresult3 = "Stefan Scheler";
+        String actualResult3 = stefan.getText();
+        Assert.assertEquals(actualResult3, expectedresult3);
 
         driver.quit();
-        System.out.println("The end of test.");
+
+    }
+
+    @Test
+    public void testCheckErrorPage() {
+        /**
+         * TC_11_11 Подтвердите, что если на странице по ссылке http://www.99-bottles-of-beer.net/submitnewlanguage.html ,  пользователь нажмет кнопку Submit Language,  не заполнив информацию в обязательных полях, будет показана ошибка
+         *
+         * Error: Precondition failed - Incomplete Input.
+         *
+         * Шаги:
+         * 1. Открыть вебсайт на странице
+         * 2. Нажать на кнопку Submit Language
+         * 3. Подтвердить, что на странице показана ошибка
+         * 4. Подтвердить, что текст ошибки соответствует ожидаемому
+         * 5. Закрыть браузер
+         */
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+        String url = "http://www.99-bottles-of-beer.net/";
+
+        driver.get(url);
+        WebElement submitNewLanguages = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
+        submitNewLanguages.click();
+
+        WebElement submitLanguageBtn = driver.findElement(By.xpath("//input[@name='submitlanguage']"));
+        submitLanguageBtn.click();
+
+        WebElement errorMessage = driver.findElement(By.xpath("//div[@id='main']/p"));
+
+        String expectedResult = "Error: Precondition failed - Incomplete Input.";
+        String actualResult = errorMessage.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        driver.quit();
+
+
+    }
+
+    @Test
+    public void testCheckErrorMessageWithEmptyFieldsInSubmitNewLanguage() {
+        /**TC_11_12 Precondition: Если на странице по ссылке http://www.99-bottles-of-beer.net/submitnewlanguage.html ,  пользователь нажмет кнопку Submit Language,  не заполнив информацию в обязательных полях, будет показана ошибка с текстом
+
+         Error: Precondition failed - Incomplete Input.
+
+         Подтвертите, что в тексте ошибки слова Error, Precondition, Incomplete и Input написаны с большой буквы, а слово failed  написано  с маленькой буквы.
+         Так же подтвердите, что в тексте ошибки содержатся знаки :, -  и .
+
+         Шаги:
+         1. Открыть вебсайт на странице
+         2. Нажать на кнопку Submit Language
+         3. Считать текст ошибки
+         4. Подтвердить requirenments
+         5. Закрыть браузер
+         */
+
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+        //Create driver
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+        //maximize browser window
+        driver.manage().window().maximize();
+        //define base url
+        String url = "http://www.99-bottles-of-beer.net";
+        //go to url
+        driver.get(url);
+        //find element Submit Language and click on it
+        WebElement submitNewLanguageMenu = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
+        submitNewLanguageMenu.click();
+        //find element "Submit Language"button and click on it
+        WebElement submitLanguageBtn = driver.findElement(By.xpath("//input[@name='submitlanguage']"));
+        submitLanguageBtn.click();
+        //find element with Error text
+        WebElement errorText = driver.findElement(By.xpath("//div[@id='main']/p"));
+        //set er and ar
+        String expectedResult = "Error: Precondition failed - Incomplete Input.";
+        String actualResult = errorText.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
 
     }
 
