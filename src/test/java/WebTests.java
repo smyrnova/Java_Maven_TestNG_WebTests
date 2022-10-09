@@ -242,11 +242,14 @@ public class WebTests {
 
     @Test
     public void testCheckErrorMessageWithEmptyFieldsInSubmitNewLanguage() {
-        /**TC_11_12 Precondition: Если на странице по ссылке http://www.99-bottles-of-beer.net/submitnewlanguage.html ,  пользователь нажмет кнопку Submit Language,  не заполнив информацию в обязательных полях, будет показана ошибка с текстом
+        /**TC_11_12 Precondition: Если на странице по ссылке http://www.99-bottles-of-beer.net/submitnewlanguage.html ,
+         *  пользователь нажмет кнопку Submit Language,  не заполнив информацию в обязательных полях, будет показана
+         *  ошибка с текстом
 
          Error: Precondition failed - Incomplete Input.
 
-         Подтвертите, что в тексте ошибки слова Error, Precondition, Incomplete и Input написаны с большой буквы, а слово failed  написано  с маленькой буквы.
+         Подтвертите, что в тексте ошибки слова Error, Precondition, Incomplete и Input написаны с большой буквы,
+         а слово failed  написано  с маленькой буквы.
          Так же подтвердите, что в тексте ошибки содержатся знаки :, -  и .
 
          Шаги:
@@ -281,8 +284,47 @@ public class WebTests {
         String actualResult = errorText.getText();
 
         Assert.assertEquals(actualResult, expectedResult);
+        driver.quit();
 
 
     }
+
+    @Test
+    public void testTC_11_13 () {
+        /**TC_11_13 Подтвердите, что на странице по ссылке http://www.99-bottles-of-beer.net/submitnewlanguage.html в
+         *  первом пункте списка пользователь видит текст
+
+         IMPORTANT: Take your time! The more carefully you fill out this form (especially the language name and
+         description), the easier it will be for us and the faster your language will show up on this page.
+         We don't have the time to mess around with fixing your descriptions etc. Thanks for your understanding.
+
+         Шаги:
+         1. Открыть вебсайт на странице
+         2. Считать текст
+         3. Подтвердить, что текст соответствует ожидаемому
+         4. Закрыть браузер
+         */
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+        //Create driver
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+        //maximize browser window
+        driver.manage().window().maximize();
+        //define base url
+        String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
+        //go to url
+        driver.get(url);
+        WebElement message = driver.findElement(By.xpath("//div[@id='main']/ul/li[1]"));
+        String expectedResult = "IMPORTANT: Take your time! The more carefully you fill out this form (especially the language name and description), the easier it will be for us and the faster your language will show up on this page. We don't have the time to mess around with fixing your descriptions etc. Thanks for your understanding.";
+        String actualResult = message.getText();
+        System.out.println(message.getText());
+
+        Assert.assertEquals(actualResult, expectedResult);
+        driver.quit();
+
+    }
+
+
 
 }
