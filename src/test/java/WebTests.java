@@ -324,6 +324,48 @@ public class WebTests {
         driver.quit();
 
     }
+    @Test
+    public void testTC_11_14 () {
+        /**
+         * TC_11_14 Подтвердите, что нажав на пункт меню Browse Languages, пользователь увидит таблицу со следующими названиями для первого и второго столбцов:
+         * Language
+         * Author
+         *
+         * Шаги:
+         * 1. Открыть вебсайт на базовой странице
+         * 2. Нажать на пункт меню Browse Languages
+         * 3. Считать названия первого и второго столбцов таблицы
+         * 3. Подтвердить, что названия соответствует ожидаемым
+         * 4. Закрыть браузер
+         */
+        String chromeDriver = "webdriver.chrome.driver";
+        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+
+        System.setProperty(chromeDriver, driverPath);
+        WebDriver driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+
+        String url = "http://www.99-bottles-of-beer.net";
+
+        driver.get(url);
+        WebElement menu = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Browse Languages']"));
+        menu.click();
+
+        WebElement firstColumn = driver.findElement(By.xpath("//table[@id='category']/tbody/tr/th[1]"));
+        WebElement secondColumn = driver.findElement(By.xpath("//table[@id='category']/tbody/tr/th[2]"));
+
+        String expectedResult1 = "Language";
+        String expectedResult2 = "Author";
+        String actualResult1 = firstColumn.getText();
+        String actualResult2 = secondColumn.getText();
+
+        Assert.assertEquals(actualResult1, expectedResult1);
+        Assert.assertEquals(actualResult2, expectedResult2);
+
+        driver.quit();
+
+    }
 
 
 
