@@ -3,11 +3,32 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.Locale;
+
 
 public class WebTests {
+
+    private static final String BASE_URL = "http://www.99-bottles-of-beer.net/";
+    private static final String CHROME_DRIVER = "webdriver.chrome.driver";
+    private static final String DRIVER_PATH = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+    private WebDriver driver;
+
+    @BeforeMethod(alwaysRun = true)
+    private void setUpDriver(){
+        System.setProperty(CHROME_DRIVER, DRIVER_PATH);
+        driver = new ChromeDriver();
+
+        driver.manage().window().maximize();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    private void closeBrowser(){
+        driver.quit();
+    }
+
     @Test
     public void testCheckH1() {
         /**
@@ -18,36 +39,12 @@ public class WebTests {
          * 3. Подтвердить, что текст заголовка соответствует ожидаемому
          * 4. Закрыть браузер
          */
-        System.out.println("'Check H1' test is started.");
-        //Create driver
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+        driver.get(BASE_URL);
 
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-
-        //maximize browser window
-        driver.manage().window().maximize();
-
-        //1. Открыть вебсайт на базовой странице
-        String url = "http://www.99-bottles-of-beer.net/";
-        driver.get(url);
-
-        //2. Считать заголовок в правом верхнем углу
         WebElement h1 = driver.findElement(By.xpath("//div[@id='header']/h1"));
 
-        //3. Подтвердить, что текст заголовка соответствует ожидаемому
-        String expectedResult = "99 Bottles of Beer";
-        String actualResult = h1.getText();
-        Assert.assertEquals(actualResult, expectedResult);
-
-
-        //4. Закрыть браузер
-        driver.quit();
-        System.out.println("The end of test");
-
+        Assert.assertEquals(h1.getText(), "99 Bottles of Beer");
     }
-
 
     @Test
     public void testCheckLastMenuItem() {
@@ -60,28 +57,16 @@ public class WebTests {
          * 3. Подтвердить, что название последнего пункта меню соответствует ожидаемому
          * 4. Закрыть браузер
          */
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+        driver.get(BASE_URL);
 
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        String url = "http://www.99-bottles-of-beer.net/";
-        driver.get(url);
-        //the LAST li element
         WebElement lastMenuItem = driver.findElement(By.xpath("//ul[@id='menu']/li[last()]"));
-        String expectedResult = "Submit new Language";
-        String actualResult = lastMenuItem.getText();
 
-        Assert.assertEquals(actualResult, expectedResult.toUpperCase());
-
-        driver.quit();
+        Assert.assertEquals(lastMenuItem.getText(), "Submit new Language".toUpperCase());
     }
 
     @Test
     public void testCheckSubmitNewLanguageSubTitle() {
+
         /**
          * TC_11_03 Подтвердите, что на странице по базовой ссылке последний пункт меню имеет подзаголовок Submit new Language
          *
@@ -92,27 +77,14 @@ public class WebTests {
          * 4. Подтвердить, что название подзаголовка последнего пункта меню соответствует ожидаемому
          * 5. Закрыть браузер
          */
+        driver.get(BASE_URL);
 
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        String url = "http://www.99-bottles-of-beer.net/";
-
-        driver.get(url);
         WebElement submitNewLanguageMenu = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
         submitNewLanguageMenu.click();
 
         WebElement submitNewLanguageSubmenu = driver.findElement(By.xpath("//ul[@id='submenu']/li/a[text()='Submit New Language']"));
-        String actualResult = submitNewLanguageSubmenu.getText();
-        String expectedResult = "Submit New Language";
 
-        Assert.assertEquals(actualResult, expectedResult);
-        driver.quit();
-
+        Assert.assertEquals(submitNewLanguageSubmenu.getText(), "Submit New Language");
     }
 
     @Test
@@ -127,33 +99,17 @@ public class WebTests {
          * 3. Подтвердить, что название подменю соответствует ожидаемому
          * 4. Закрыть браузер
          */
-
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        String url = "http://www.99-bottles-of-beer.net/abc.html";
-
-        driver.get(url);
+        driver.get("http://www.99-bottles-of-beer.net/abc.html");
 
         WebElement subMenu = driver.findElement(By.xpath("//ul[@id='submenu']/li/a[text()='0-9']"));
-        String expectedresult = "0-9";
-        String actualResult = subMenu.getText();
 
-        Assert.assertEquals(actualResult, expectedresult);
-
-        driver.quit();
+        Assert.assertEquals(subMenu.getText(), "0-9");
     }
-
 
     @Test
     public void testCheckNamesSiteOwners() {
 
-        /**
-         * TC_11_06 Подтвердите, что имена создателей сайта:
+         /** TC_11_06 Подтвердите, что имена создателей сайта:
          * Oliver Schade
          * Gregor Scheithauer
          * Stefan Scheler
@@ -164,39 +120,17 @@ public class WebTests {
          * 3.Подтвердить, имена создателей.
          * 4.Закрыть браузер
          */
+        driver.get(BASE_URL);
 
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        String url = "http://www.99-bottles-of-beer.net/";
-
-        driver.get(url);
-
-        WebElement teamSubmenu = driver.findElement(By.xpath("//ul[@id='submenu']/li/a[text()='Team']"));
-        teamSubmenu.click();
+        driver.findElement(By.xpath("//ul[@id='submenu']/li/a[text()='Team']")).click();
 
         WebElement oliver = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Oliver Schade']"));
         WebElement gregor = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Gregor Scheithauer']"));
         WebElement stefan = driver.findElement(By.xpath("//div[@id='main']/h3[text()='Stefan Scheler']"));
 
-        String expectedresult1 = "Oliver Schade";
-        String actualResult1 = oliver.getText();
-        Assert.assertEquals(actualResult1, expectedresult1);
-
-        String expectedresult2 = "Gregor Scheithauer";
-        String actualResult2 = gregor.getText();
-        Assert.assertEquals(actualResult2, expectedresult2);
-
-        String expectedresult3 = "Stefan Scheler";
-        String actualResult3 = stefan.getText();
-        Assert.assertEquals(actualResult3, expectedresult3);
-
-        driver.quit();
-
+        Assert.assertEquals(oliver.getText(), "Oliver Schade");
+        Assert.assertEquals(gregor.getText(), "Gregor Scheithauer");
+        Assert.assertEquals(stefan.getText(), "Stefan Scheler");
     }
 
     @Test
@@ -213,15 +147,8 @@ public class WebTests {
          * 4. Подтвердить, что текст ошибки соответствует ожидаемому
          * 5. Закрыть браузер
          */
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
+        driver.get(BASE_URL);
 
-        driver.manage().window().maximize();
-        String url = "http://www.99-bottles-of-beer.net/";
-
-        driver.get(url);
         WebElement submitNewLanguages = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
         submitNewLanguages.click();
 
@@ -234,10 +161,6 @@ public class WebTests {
         String actualResult = errorMessage.getText();
 
         Assert.assertEquals(actualResult, expectedResult);
-
-        driver.quit();
-
-
     }
 
     @Test
@@ -259,18 +182,7 @@ public class WebTests {
          4. Подтвердить requirenments
          5. Закрыть браузер
          */
-
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
-        //Create driver
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-        //maximize browser window
-        driver.manage().window().maximize();
-        //define base url
-        String url = "http://www.99-bottles-of-beer.net";
-        //go to url
-        driver.get(url);
+        driver.get(BASE_URL);
         //find element Submit Language and click on it
         WebElement submitNewLanguageMenu = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Submit new Language']"));
         submitNewLanguageMenu.click();
@@ -284,10 +196,7 @@ public class WebTests {
         String actualResult = errorText.getText();
 
         Assert.assertEquals(actualResult, expectedResult);
-        driver.quit();
-
-
-    }
+      }
 
     @Test
     public void testTC_11_13 () {
@@ -304,16 +213,8 @@ public class WebTests {
          3. Подтвердить, что текст соответствует ожидаемому
          4. Закрыть браузер
          */
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
-        //Create driver
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-        //maximize browser window
-        driver.manage().window().maximize();
-        //define base url
         String url = "http://www.99-bottles-of-beer.net/submitnewlanguage.html";
-        //go to url
+
         driver.get(url);
         WebElement message = driver.findElement(By.xpath("//div[@id='main']/ul/li[1]"));
         String expectedResult = "IMPORTANT: Take your time! The more carefully you fill out this form (especially the language name and description), the easier it will be for us and the faster your language will show up on this page. We don't have the time to mess around with fixing your descriptions etc. Thanks for your understanding.";
@@ -321,9 +222,8 @@ public class WebTests {
         System.out.println(message.getText());
 
         Assert.assertEquals(actualResult, expectedResult);
-        driver.quit();
-
     }
+
     @Test
     public void testTC_11_14 () {
         /**
@@ -338,17 +238,8 @@ public class WebTests {
          * 3. Подтвердить, что названия соответствует ожидаемым
          * 4. Закрыть браузер
          */
-        String chromeDriver = "webdriver.chrome.driver";
-        String driverPath = "C:/tools/chromeDriver/chromedriver_v105/chromedriver.exe";
+        driver.get(BASE_URL);
 
-        System.setProperty(chromeDriver, driverPath);
-        WebDriver driver = new ChromeDriver();
-
-        driver.manage().window().maximize();
-
-        String url = "http://www.99-bottles-of-beer.net";
-
-        driver.get(url);
         WebElement menu = driver.findElement(By.xpath("//ul[@id='menu']/li/a[text()='Browse Languages']"));
         menu.click();
 
@@ -362,11 +253,5 @@ public class WebTests {
 
         Assert.assertEquals(actualResult1, expectedResult1);
         Assert.assertEquals(actualResult2, expectedResult2);
-
-        driver.quit();
-
     }
-
-
-
 }
